@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday!</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Comic Sans MS', cursive;
+  background: linear-gradient(135deg, #ffd6ec, #d6f0ff);
+  text-align: center;
+}
+
+/* Main title */
+h1 {
+  margin-top: 20vh;
+  font-size: 3em;
+  color: #ff4081;
+  text-shadow: 2px 2px white;
+}
+
+/* Wishes popup */
+#wishBox {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 15px 25px;
+  border-radius: 20px;
+  font-size: 1.2em;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+/* Floating characters */
+.character {
+  position: absolute;
+  width: 80px;
+  animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-40px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: red;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  from { transform: translateY(-10vh); }
+  to { transform: translateY(110vh); }
+}
+
+#startBtn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  background: #ff4081;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎉 Happy Birthday Priya! 🎂</h1>
+<button id="startBtn">Tap for Surprise 🎁</button>
+<div id="wishBox">Wishing you an amazing year!</div>
+
+<!-- Cute characters (replace image links if you want) -->
+<img src="https://i.imgur.com/7yUvePI.png" class="character" style="left:10%; top:60%;">
+<img src="https://i.imgur.com/5cX1XcR.png" class="character" style="left:75%; top:65%; animation-duration:7s;">
+
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Music start
+document.getElementById("startBtn").addEventListener("click", function(){
+  document.getElementById("music").play();
+  this.style.display = "none";
+});
+
+// Rotating wishes
+const wishes = [
+  "🎂 Hope your day is full of cake!",
+  "🌟 You make work brighter!",
+  "🎁 May all your dreams come true!",
+  "💖 Keep smiling always!"
+];
+
+let i = 0;
+setInterval(() => {
+  document.getElementById("wishBox").textContent = wishes[i % wishes.length];
+  i++;
+}, 3000);
+
+// Confetti generator
+for(let i=0;i<40;i++){
+  let c = document.createElement("div");
+  c.className = "confetti";
+  c.style.left = Math.random()*100 + "vw";
+  c.style.animationDuration = (Math.random()*3+2) + "s";
+  c.style.background = ["#ff4081","#ffeb3b","#4caf50","#2196f3"][Math.floor(Math.random()*4)];
+  document.body.appendChild(c);
+}
+</script>
+
+</body>
+</html>
