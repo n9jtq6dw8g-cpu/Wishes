@@ -40,7 +40,6 @@ h1 {
   font-size: 3.5em;
   animation: glow 1.5s infinite alternate;
 }
-
 @keyframes glow {
   from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff, 0 0 30px #ff00ff; }
   to   { text-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff, 0 0 40px #00ffff; }
@@ -58,7 +57,6 @@ h1 {
   backdrop-filter: blur(10px);
   animation: pulse 2s infinite;
 }
-
 @keyframes pulse {
   0% { box-shadow: 0 0 10px #ff00ff; }
   50% { box-shadow: 0 0 25px #00ffff; }
@@ -82,10 +80,31 @@ h1 {
   left: 50%;
   top: 55px;
 }
-
 @keyframes rise {
   from { transform: translateY(100vh); }
   to { transform: translateY(-120vh); }
+}
+
+/* CARTOON CHARACTERS */
+.character {
+  position: absolute;
+  width: 110px;
+  animation: floaty 6s ease-in-out infinite;
+}
+.character img {
+  width: 100%;
+  animation: bobble 1.2s infinite ease-in-out;
+  transform-origin: top center;
+}
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-30px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes bobble {
+  0% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+  100% { transform: rotate(-5deg); }
 }
 
 #startBtn {
@@ -110,8 +129,18 @@ h1 {
 
 <h1>🎉 HAPPY BIRTHDAY PRIYA 🎂</h1>
 <button id="startBtn">Start Music 🎵</button>
-
 <div id="wishBox">Welcome to your birthday night!</div>
+
+<!-- 🎭 YOUR CARTOON CHARACTERS -->
+<div class="character" style="left:5%; top:60%;">
+  <img src="char1.png">
+</div>
+<div class="character" style="left:80%; top:65%; animation-duration:7s;">
+  <img src="char2.png">
+</div>
+<div class="character" style="left:40%; top:70%; animation-duration:5s;">
+  <img src="char3.png">
+</div>
 
 <audio id="music" loop>
   <source src="song.mp3" type="audio/mpeg">
@@ -173,6 +202,13 @@ document.addEventListener("click", function(e){
     setTimeout(()=>spark.remove(),700);
   }
 });
+
+// EXTRA CHARACTER WIGGLE
+setInterval(()=>{
+  document.querySelectorAll('.character img').forEach(el=>{
+    el.style.transform = `rotate(${Math.random()*10-5}deg) scale(${1+Math.random()*0.05})`;
+  });
+},300);
 
 // SUBTLE STAGE FLASH
 setInterval(()=>{
