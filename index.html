@@ -3,72 +3,99 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Happy Birthday!</title>
+<title>Neon Birthday Night</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  font-family: 'Comic Sans MS', cursive;
-  background: linear-gradient(135deg, #ffd6ec, #d6f0ff);
-  text-align: center;
+  font-family: 'Trebuchet MS', sans-serif;
+  background: radial-gradient(circle at center, #0f0f1a, #000);
+  color: white;
 }
 
-/* Main title */
+/* DISCO LIGHT BLOBS */
+.light {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.6;
+  animation: moveLights 10s infinite alternate ease-in-out;
+}
+.light:nth-child(1){ background:#ff00ff; top:10%; left:10%; }
+.light:nth-child(2){ background:#00ffff; top:50%; left:60%; animation-duration:12s;}
+.light:nth-child(3){ background:#ffea00; top:30%; left:30%; animation-duration:8s;}
+
+@keyframes moveLights {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(150px, 100px); }
+}
+
+/* NEON TITLE */
 h1 {
-  margin-top: 20vh;
-  font-size: 3em;
-  color: #ff4081;
-  text-shadow: 2px 2px white;
+  margin-top: 25vh;
+  text-align: center;
+  font-size: 3.5em;
+  animation: glow 1.5s infinite alternate;
 }
 
-/* Wishes popup */
+@keyframes glow {
+  from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff, 0 0 30px #ff00ff; }
+  to   { text-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff, 0 0 40px #00ffff; }
+}
+
+/* WISH BOX */
 #wishBox {
   position: fixed;
-  bottom: 10%;
+  bottom: 12%;
   left: 50%;
   transform: translateX(-50%);
-  background: white;
-  padding: 15px 25px;
+  padding: 15px 30px;
   border-radius: 20px;
-  font-size: 1.2em;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  animation: pulse 2s infinite;
 }
 
-/* Floating characters */
-.character {
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px #ff00ff; }
+  50% { box-shadow: 0 0 25px #00ffff; }
+  100% { box-shadow: 0 0 10px #ff00ff; }
+}
+
+/* BALLOONS */
+.balloon {
   position: absolute;
-  width: 80px;
-  animation: float 6s infinite ease-in-out;
+  width: 40px;
+  height: 55px;
+  border-radius: 50% 50% 45% 45%;
+  animation: rise linear infinite;
 }
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-40px); }
-  100% { transform: translateY(0px); }
-}
-
-/* Confetti */
-.confetti {
+.balloon::after {
+  content: "";
   position: absolute;
-  width: 8px;
-  height: 8px;
-  background: red;
-  animation: fall linear infinite;
+  width: 2px;
+  height: 40px;
+  background: #555;
+  left: 50%;
+  top: 55px;
 }
 
-@keyframes fall {
-  from { transform: translateY(-10vh); }
-  to { transform: translateY(110vh); }
+@keyframes rise {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-120vh); }
 }
 
 #startBtn {
-  margin-top: 20px;
-  padding: 12px 25px;
-  font-size: 18px;
-  border-radius: 30px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
   border: none;
-  background: #ff4081;
+  background: #ff00ff;
   color: white;
   cursor: pointer;
 }
@@ -77,51 +104,51 @@ h1 {
 
 <body>
 
-<h1>🎉 Happy Birthday Evy! 🎂</h1>
-<button id="startBtn">Tap for Surprise 🎁</button>
-<div id="wishBox">Wishing you an amazing year!</div>
+<div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
 
-<!-- Cute characters (replace image links if you want) -->
-<img src="https://i.imgur.com/7yUvePI.png" class="character" style="left:10%; top:60%;">
-<img src="https://i.imgur.com/5cX1XcR.png" class="character" style="left:75%; top:65%; animation-duration:7s;">
+<h1>🎉 HAPPY BIRTHDAY PRIYA 🎂</h1>
+<button id="startBtn">Start Music 🎵</button>
+
+<div id="wishBox">Welcome to your birthday night!</div>
 
 <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Music start
+// MUSIC
 document.getElementById("startBtn").addEventListener("click", function(){
   document.getElementById("music").play();
   this.style.display = "none";
 });
 
-// Rotating wishes
+// WISHES
 const wishes = [
-  "🎂 Hope your day is full of cake!",
-  "🌟 You make work brighter!",
-  "🎁 May all your dreams come true!",
-  "💖 Keep smiling always!"
+  "🎂 Hope your life shines like these lights!",
+  "🌟 Keep rocking, superstar!",
+  "🎁 May this year be legendary!",
+  "💖 Party like a birthday icon!"
 ];
-
 let i = 0;
 setInterval(() => {
   document.getElementById("wishBox").textContent = wishes[i % wishes.length];
   i++;
 }, 3000);
 
-// Confetti generator
-for(let i=0;i<40;i++){
-  let c = document.createElement("div");
-  c.className = "confetti";
-  c.style.left = Math.random()*100 + "vw";
-  c.style.animationDuration = (Math.random()*3+2) + "s";
-  c.style.background = ["#ff4081","#ffeb3b","#4caf50","#2196f3"][Math.floor(Math.random()*4)];
-  document.body.appendChild(c);
+// BALLOONS
+const colors = ["#ff4d6d","#ffbe0b","#8338ec","#3a86ff","#06d6a0"];
+for (let i = 0; i < 12; i++) {
+  let b = document.createElement("div");
+  b.className = "balloon";
+  b.style.left = Math.random() * 100 + "vw";
+  b.style.background = colors[Math.floor(Math.random() * colors.length)];
+  b.style.animationDuration = (Math.random() * 5 + 5) + "s";
+  document.body.appendChild(b);
 }
-</script>
 
-<script>
+// FIREWORKS
 document.addEventListener("click", function(e){
   for(let i=0;i<15;i++){
     let spark = document.createElement("div");
@@ -131,9 +158,8 @@ document.addEventListener("click", function(e){
     spark.style.width = "6px";
     spark.style.height = "6px";
     spark.style.borderRadius = "50%";
-    spark.style.background = ["#ff4081","#ffeb3b","#4caf50","#2196f3"][Math.floor(Math.random()*4)];
+    spark.style.background = colors[Math.floor(Math.random()*colors.length)];
     spark.style.transition = "all 0.6s ease-out";
-
     document.body.appendChild(spark);
 
     let angle = Math.random() * 2 * Math.PI;
@@ -147,8 +173,12 @@ document.addEventListener("click", function(e){
     setTimeout(()=>spark.remove(),700);
   }
 });
+
+// SUBTLE STAGE FLASH
+setInterval(()=>{
+  document.body.style.backgroundColor = Math.random() > 0.5 ? "#050510" : "#0a0a1a";
+}, 500);
 </script>
 
-  
 </body>
 </html>
