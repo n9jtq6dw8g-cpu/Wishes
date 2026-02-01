@@ -21,17 +21,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, #111, #000);
+  background: black;
   z-index: 10;
   cursor: pointer;
 }
-
 #startScreen h2 {
   font-size: 3em;
   animation: glow 1.5s infinite alternate;
 }
 
-/* NEON ROTATING LIGHT RAYS */
+/* ROTATING NEON RAYS */
 .ray {
   position: absolute;
   width: 4px;
@@ -40,10 +39,10 @@ body {
   left: 50%;
   top: -10vh;
   transform-origin: center top;
-  animation: rotateRays 6s linear infinite;
-  opacity: 0.4;
+  animation: rotateRays 8s linear infinite;
+  opacity: 0.3;
+  z-index: 0;
 }
-
 @keyframes rotateRays {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -51,13 +50,14 @@ body {
 
 /* TITLE */
 h1 {
-  margin-top: 25vh;
+  margin-top: 18vh;
   text-align: center;
   font-size: 3.5em;
   display: none;
+  z-index: 2;
+  position: relative;
   animation: glow 1.5s infinite alternate;
 }
-
 @keyframes glow {
   from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
   to   { text-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff; }
@@ -66,7 +66,7 @@ h1 {
 /* WISH BOX */
 #wishBox {
   position: fixed;
-  bottom: 12%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
   padding: 15px 30px;
@@ -74,51 +74,62 @@ h1 {
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(10px);
   display: none;
+  z-index: 2;
 }
 
-/* BALLOONS */
-.balloon {
+/* HUMANOID DANCER */
+.dancer {
+  position: absolute;
+  width: 80px;
+  height: 160px;
+  z-index: 1;
+}
+
+/* torso */
+.torso {
   position: absolute;
   width: 40px;
-  height: 55px;
-  border-radius: 50% 50% 45% 45%;
-  animation: rise linear infinite;
-}
-.balloon::after {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: 40px;
-  background: #555;
-  left: 50%;
-  top: 55px;
-}
-@keyframes rise {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-120vh); }
-}
-
-/* DANCING BODY */
-.body {
-  position: absolute;
-  width: 60px;
-  height: 100px;
+  height: 70px;
   background: linear-gradient(#00ffff, #ff00ff);
-  border-radius: 30px;
-  animation: dance 0.6s infinite alternate ease-in-out;
+  top: 40px;
+  left: 20px;
+  border-radius: 20px;
 }
 
-@keyframes dance {
-  from { transform: translateY(0) rotate(-5deg); }
-  to { transform: translateY(-10px) rotate(5deg); }
+/* arms */
+.arm {
+  position: absolute;
+  width: 12px;
+  height: 60px;
+  background: #00ffff;
+  top: 45px;
+  border-radius: 10px;
+  transform-origin: top center;
+  animation: armDance 0.6s infinite alternate ease-in-out;
 }
+.arm.left { left: 5px; }
+.arm.right { right: 5px; animation-delay: .3s; }
 
-/* HEAD PNG */
+/* legs */
+.leg {
+  position: absolute;
+  width: 14px;
+  height: 70px;
+  background: #ff00ff;
+  top: 105px;
+  border-radius: 10px;
+  transform-origin: top center;
+  animation: legDance 0.6s infinite alternate ease-in-out;
+}
+.leg.left { left: 18px; }
+.leg.right { right: 18px; animation-delay: .3s; }
+
+/* head (your PNG) */
 .head {
   position: absolute;
   width: 70px;
-  top: -50px;
-  left: -5px;
+  top: 0;
+  left: 5px;
   animation: bobble 1s infinite ease-in-out;
 }
 
@@ -127,6 +138,16 @@ h1 {
   50% { transform: rotate(6deg); }
   100% { transform: rotate(-6deg); }
 }
+
+@keyframes armDance {
+  from { transform: rotate(-30deg); }
+  to { transform: rotate(30deg); }
+}
+
+@keyframes legDance {
+  from { transform: rotate(10deg); }
+  to { transform: rotate(-10deg); }
+}
 </style>
 </head>
 
@@ -134,22 +155,29 @@ h1 {
 
 <div id="startScreen"><h2>CLICK TO START</h2></div>
 
-<!-- Neon rotating rays -->
-<div class="ray"></div><div class="ray" style="animation-delay:1s"></div>
-<div class="ray" style="animation-delay:2s"></div><div class="ray" style="animation-delay:3s"></div>
+<div class="ray"></div><div class="ray" style="animation-delay:2s"></div>
+<div class="ray" style="animation-delay:4s"></div>
 
 <h1 id="title">🎉 HAPPY BIRTHDAY PRIYA 🎂</h1>
 <div id="wishBox">Let the party begin!</div>
 
-<!-- Dancing Characters -->
-<div class="body" style="left:20%; top:70%;">
+<!-- DANCERS (kept mid-screen) -->
+<div class="dancer" style="left:15%; top:45%;">
   <img src="head1.png" class="head">
+  <div class="torso"></div>
+  <div class="arm left"></div>
+  <div class="arm right"></div>
+  <div class="leg left"></div>
+  <div class="leg right"></div>
 </div>
-<div class="body" style="left:70%; top:72%;">
+
+<div class="dancer" style="left:70%; top:50%;">
   <img src="head2.png" class="head">
-</div>
-<div class="body" style="left:45%; top:75%;">
-  <img src="head3.png" class="head">
+  <div class="torso"></div>
+  <div class="arm left"></div>
+  <div class="arm right"></div>
+  <div class="leg left"></div>
+  <div class="leg right"></div>
 </div>
 
 <audio id="music" loop>
@@ -157,38 +185,22 @@ h1 {
 </audio>
 
 <script>
-const wishes = [
-  "🎂 Another legendary year begins!",
-  "🌟 You’re the star tonight!",
-  "🎁 Make a wish and dance!",
-  "💖 Party mode activated!"
+const wishes=[
+"🎂 Another legendary year begins!",
+"🌟 You’re the star tonight!",
+"🎁 Make a wish and dance!",
+"💖 Party mode activated!"
 ];
 
-// Start interaction
-document.getElementById("startScreen").addEventListener("click", () => {
-  document.getElementById("startScreen").style.display = "none";
-  document.getElementById("title").style.display = "block";
-  document.getElementById("wishBox").style.display = "block";
-  document.getElementById("music").play();
+document.getElementById("startScreen").onclick=()=>{
+  startScreen.style.display="none";
+  title.style.display="block";
+  wishBox.style.display="block";
+  music.play();
 
-  // Wishes rotate
   let i=0;
-  setInterval(()=>{
-    document.getElementById("wishBox").textContent=wishes[i%wishes.length];
-    i++;
-  },3000);
-
-  // Balloons appear
-  const colors=["#ff4d6d","#ffbe0b","#8338ec","#3a86ff","#06d6a0"];
-  for(let i=0;i<12;i++){
-    let b=document.createElement("div");
-    b.className="balloon";
-    b.style.left=Math.random()*100+"vw";
-    b.style.background=colors[Math.floor(Math.random()*colors.length)];
-    b.style.animationDuration=(Math.random()*5+5)+"s";
-    document.body.appendChild(b);
-  }
-});
+  setInterval(()=>{wishBox.textContent=wishes[i++%wishes.length];},3000);
+};
 </script>
 
 </body>
