@@ -1,163 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Evy!</title>
 
 <style>
-body {
-  margin: 0;
-  overflow: hidden;
+body{
+  margin:0;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
   background: radial-gradient(circle at center, #0f0f1a, #000);
-  font-family: Arial, sans-serif;
-  color: white;
+  color:white;
 }
 
 /* START SCREEN */
-#startScreen {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: black;
-  z-index: 10;
-  cursor: pointer;
+#startScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:black;
+  z-index:10;
+  cursor:pointer;
 }
-#startScreen h2 {
-  font-size: 3em;
-  animation: glow 1.5s infinite alternate;
+#startScreen h2{
+  font-size:3em;
+  animation:glow 1.5s infinite alternate;
 }
 
-/* NEON RAYS */
-.ray {
-  position: absolute;
-  width: 4px;
-  height: 120vh;
-  background: linear-gradient(to bottom, transparent, #ff00ff, transparent);
-  left: 50%;
-  top: -10vh;
-  transform-origin: center top;
-  animation: rotateRays 8s linear infinite;
-  opacity: 0.3;
+/* GLOW */
+@keyframes glow{
+  from{ text-shadow:0 0 10px #ff00ff,0 0 20px #00ffff; }
+  to{ text-shadow:0 0 20px #00ffff,0 0 30px #ff00ff; }
 }
-@keyframes rotateRays {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+
+/* STAGE FLASH */
+@keyframes stageFlash{
+  0%{background-color:#0f0f1a;}
+  25%{background-color:#14001f;}
+  50%{background-color:#001f2f;}
+  75%{background-color:#1a001a;}
+  100%{background-color:#0f0f1a;}
+}
+body.partyMode{ animation:stageFlash 2s infinite; }
+
+/* DISCO BALL */
+.disco-ball{
+  position:absolute;
+  top:5%;
+  left:50%;
+  transform:translateX(-50%);
+  width:120px;height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff,#aaa);
+  box-shadow:0 0 40px #fff;
+  animation:spinBall 4s linear infinite;
+}
+@keyframes spinBall{
+  from{transform:translateX(-50%) rotate(0);}
+  to{transform:translateX(-50%) rotate(360deg);}
+}
+
+/* BEAMS */
+.beam{
+  position:absolute;
+  width:2px;height:120vh;
+  background:linear-gradient(to bottom,transparent,#00ffff,transparent);
+  left:50%;top:0;
+  opacity:.2;
+  transform-origin:top center;
+  animation:spinBeams 6s linear infinite;
+}
+@keyframes spinBeams{
+  from{transform:rotate(0);}
+  to{transform:rotate(360deg);}
+}
+
+/* SPARKLES */
+.sparkle{
+  position:absolute;
+  width:4px;height:4px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{
+  from{opacity:.2;transform:scale(.5);}
+  to{opacity:1;transform:scale(1.5);}
 }
 
 /* TITLE */
-h1 {
-  margin-top: 18vh;
-  text-align: center;
-  font-size: 3.5em;
-  display: none;
-  position: relative;
-  z-index: 2;
-  animation: glow 1.5s infinite alternate;
-}
-@keyframes glow {
-  from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
-  to   { text-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff; }
+h1{
+  margin-top:18vh;
+  text-align:center;
+  font-size:3.5em;
+  display:none;
+  position:relative;
+  z-index:2;
+  animation:glow 1.5s infinite alternate;
 }
 
 /* WISH BOX */
-#wishBox {
-  position: fixed;
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 15px 30px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  display: none;
-  z-index: 2;
+#wishBox{
+  position:fixed;
+  bottom:8%;
+  left:50%;
+  transform:translateX(-50%);
+  padding:15px 30px;
+  border-radius:20px;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(10px);
+  display:none;
+  z-index:2;
 }
 
 /* DANCERS */
-.dancer {
-  position: absolute;
-  width: 90px;
-  height: 170px;
-}
+.dancer{ position:absolute;width:90px;height:170px; }
 
 /* HEAD */
-.head {
-  position: absolute;
-  width: 70px;
-  top: 0;
-  left: 10px;
-  animation: headBob 1s infinite ease-in-out;
-}
-@keyframes headBob {
-  0% { transform: rotate(-6deg); }
-  50% { transform: rotate(6deg); }
-  100% { transform: rotate(-6deg); }
-}
+.head{ position:absolute;width:70px;top:0;left:10px;animation:headBob 1s infinite ease-in-out; }
+@keyframes headBob{0%{transform:rotate(-6deg);}50%{transform:rotate(6deg);}100%{transform:rotate(-6deg);}}
 
-/* TORSO */
-.torso {
-  position: absolute;
-  width: 44px;
-  height: 75px;
-  background: linear-gradient(#00ffff, #ff00ff);
-  top: 45px;
-  left: 23px;
-  border-radius: 22px;
-}
-
-/* ARMS */
-.arm {
-  position: absolute;
-  width: 12px;
-  height: 65px;
-  background: #00ffff;
-  top: 50px;
-  border-radius: 10px;
-  transform-origin: top center;
-}
-.arm.left { left: 8px; }
-.arm.right { right: 8px; }
-
-/* LEGS */
-.leg {
-  position: absolute;
-  width: 14px;
-  height: 75px;
-  background: #ff00ff;
-  top: 115px;
-  border-radius: 10px;
-  transform-origin: top center;
-}
-.leg.left { left: 22px; }
-.leg.right { right: 22px; }
+/* BODY */
+.torso{position:absolute;width:44px;height:75px;background:linear-gradient(#00ffff,#ff00ff);top:45px;left:23px;border-radius:22px;}
+.arm,.leg{position:absolute;border-radius:10px;transform-origin:top center;}
+.arm{width:12px;height:65px;background:#00ffff;top:50px;}
+.leg{width:14px;height:75px;background:#ff00ff;top:115px;}
+.arm.left{left:8px;} .arm.right{right:8px;}
+.leg.left{left:22px;} .leg.right{right:22px;}
 
 /* DISCO MOVES */
-.disco1 .arm.left { animation: armUp 0.6s infinite alternate; }
-.disco1 .arm.right { animation: armUp 0.6s infinite alternate .3s; }
-.disco1 .leg.left, .disco1 .leg.right { animation: legBounce 0.5s infinite alternate; }
+.disco1 .arm.left{animation:armUp .6s infinite alternate;}
+.disco1 .arm.right{animation:armUp .6s infinite alternate .3s;}
+.disco1 .leg.left,.disco1 .leg.right{animation:legBounce .5s infinite alternate;}
 
-.disco2 { animation: sway 1s infinite alternate ease-in-out; }
-.disco2 .arm.left { animation: armSide 0.8s infinite alternate; }
-.disco2 .arm.right { animation: armSide 0.8s infinite alternate .4s; }
+.disco2{animation:sway 1s infinite alternate;}
+.disco2 .arm.left{animation:armSide .8s infinite alternate;}
+.disco2 .arm.right{animation:armSide .8s infinite alternate .4s;}
 
-.disco3 { animation: twist 0.6s infinite alternate; }
-.disco3 .leg.left { animation: legKick 0.5s infinite alternate; }
+.disco3{animation:twist .6s infinite alternate;}
+.disco3 .leg.left{animation:legKick .5s infinite alternate;}
 
-.disco4 { animation: bounce 0.5s infinite alternate; }
-.disco4 .arm.left, .disco4 .arm.right { animation: armWave 0.6s infinite alternate; }
+.disco4{animation:bounce .5s infinite alternate;}
+.disco4 .arm.left,.disco4 .arm.right{animation:armWave .6s infinite alternate;}
 
-/* KEYFRAMES */
-@keyframes armUp { from { transform: rotate(-30deg); } to { transform: rotate(-110deg); } }
-@keyframes legBounce { from { transform: rotate(10deg); } to { transform: rotate(-10deg); } }
-@keyframes sway { from { transform: translateX(-10px); } to { transform: translateX(10px); } }
-@keyframes armSide { from { transform: rotate(20deg); } to { transform: rotate(-40deg); } }
-@keyframes twist { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
-@keyframes legKick { from { transform: rotate(5deg); } to { transform: rotate(-35deg); } }
-@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-@keyframes armWave { from { transform: rotate(-10deg); } to { transform: rotate(50deg); } }
+@keyframes armUp{from{transform:rotate(-30deg);}to{transform:rotate(-110deg);}}
+@keyframes legBounce{from{transform:rotate(10deg);}to{transform:rotate(-10deg);}}
+@keyframes sway{from{transform:translateX(-10px);}to{transform:translateX(10px);}}
+@keyframes armSide{from{transform:rotate(20deg);}to{transform:rotate(-40deg);}}
+@keyframes twist{from{transform:rotate(-10deg);}to{transform:rotate(10deg);}}
+@keyframes legKick{from{transform:rotate(5deg);}to{transform:rotate(-35deg);}}
+@keyframes bounce{from{transform:translateY(0);}to{transform:translateY(-15px);}}
+@keyframes armWave{from{transform:rotate(-10deg);}to{transform:rotate(50deg);}}
 </style>
 </head>
 
@@ -165,56 +161,52 @@ h1 {
 
 <div id="startScreen"><h2>CLICK TO START</h2></div>
 
-<div class="ray"></div><div class="ray" style="animation-delay:2s"></div>
-<div class="ray" style="animation-delay:4s"></div>
+<div class="disco-ball"></div>
+<div class="beam"></div><div class="beam" style="animation-delay:2s"></div>
+<div class="beam" style="animation-delay:4s"></div>
 
-<h1 id="title">🎉 HAPPY BIRTHDAY EVY 🎂</h1>
+<h1 id="title">🎉 HAPPY BIRTHDAY EVY!!! 🎂</h1>
 <div id="wishBox">Let the party begin!</div>
 
-<!-- 4 DANCERS -->
+<!-- DANCERS -->
 <div class="dancer disco1" style="left:10%; top:45%;">
-  <img src="head1.png" class="head"><div class="torso"></div>
-  <div class="arm left"></div><div class="arm right"></div>
-  <div class="leg left"></div><div class="leg right"></div>
+<img src="head1.png" class="head"><div class="torso"></div><div class="arm left"></div><div class="arm right"></div><div class="leg left"></div><div class="leg right"></div>
 </div>
-
 <div class="dancer disco2" style="left:30%; top:48%;">
-  <img src="head2.png" class="head"><div class="torso"></div>
-  <div class="arm left"></div><div class="arm right"></div>
-  <div class="leg left"></div><div class="leg right"></div>
+<img src="head2.png" class="head"><div class="torso"></div><div class="arm left"></div><div class="arm right"></div><div class="leg left"></div><div class="leg right"></div>
 </div>
-
 <div class="dancer disco3" style="left:55%; top:50%;">
-  <img src="head3.png" class="head"><div class="torso"></div>
-  <div class="arm left"></div><div class="arm right"></div>
-  <div class="leg left"></div><div class="leg right"></div>
+<img src="head3.png" class="head"><div class="torso"></div><div class="arm left"></div><div class="arm right"></div><div class="leg left"></div><div class="leg right"></div>
 </div>
-
 <div class="dancer disco4" style="left:75%; top:46%;">
-  <img src="head4.png" class="head"><div class="torso"></div>
-  <div class="arm left"></div><div class="arm right"></div>
-  <div class="leg left"></div><div class="leg right"></div>
+<img src="head4.png" class="head"><div class="torso"></div><div class="arm left"></div><div class="arm right"></div><div class="leg left"></div><div class="leg right"></div>
 </div>
 
 <audio id="music" loop>
-  <source src="song.mp3" type="audio/mpeg">
+<source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const wishes=[
-"🎂 Another legendary year begins!",
-"🌟 You’re the star!",
-"🎁 Make a wish and dance!",
-"💖 Party mode activated!"
-];
+const wishes=["🎂 Another legendary year begins!","🌟 You’re the star tonight!","🎁 Make a wish and dance!","💖 Party mode activated!"];
 
 startScreen.onclick=()=>{
   startScreen.style.display="none";
   title.style.display="block";
   wishBox.style.display="block";
   music.play();
+  document.body.classList.add("partyMode");
+
   let i=0;
   setInterval(()=>{wishBox.textContent=wishes[i++%wishes.length];},3000);
+
+  for(let i=0;i<80;i++){
+    let s=document.createElement("div");
+    s.className="sparkle";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.animationDuration=(Math.random()*2+1)+"s";
+    document.body.appendChild(s);
+  }
 };
 </script>
 
